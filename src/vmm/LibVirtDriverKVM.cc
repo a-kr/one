@@ -388,6 +388,7 @@ int LibVirtDriver::deployment_description_kvm(
     if (vm->get_template_attribute("MEMORY",memory))
     {
         file << "\t<memory>" << memory * 1024 << "</memory>" << endl;
+        file << "\t<maxMemory>" << 4 * memory * 1024 << "</maxMemory>" << endl;
     }
     else
     {
