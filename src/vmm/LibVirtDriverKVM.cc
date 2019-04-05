@@ -167,6 +167,7 @@ int LibVirtDriver::deployment_description_kvm(
     string  vcpu;
     float   cpu;
     int     memory;
+    int     maxmemory;
 
     string  emulator_path = "";
 
@@ -388,11 +389,16 @@ int LibVirtDriver::deployment_description_kvm(
     if (vm->get_template_attribute("MEMORY",memory))
     {
         file << "\t<memory>" << memory * 1024 << "</memory>" << endl;
-        file << "\t<maxMemory>" << 4 * memory * 1024 << "</maxMemory>" << endl;
     }
     else
     {
         goto error_memory;
+    }
+
+    // Memory must be expressed in Kb
+    if (vm->get_template_attribute("MAXMEMORY",maxmemory))
+    {
+        file << "\t<maxMemory>" << maxmemory * 1024 << "</maxMemory>" << endl;
     }
 
     // ------------------------------------------------------------------------
